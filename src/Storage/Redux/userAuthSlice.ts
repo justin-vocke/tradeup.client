@@ -12,10 +12,9 @@ export const userAuthSlice = createSlice({
   initialState: emptyUserState,
   reducers: {
     setLoggedInUser: (state, action) => {
-      state.firstName = action.payload.firstName;
-      state.lastName = action.payload.lastName;
+      state.firstName = action.payload.given_name;
+      state.lastName = action.payload.family_name;
       state.email = action.payload.email;
-      state.role = action.payload.role;
     },
   },
 });

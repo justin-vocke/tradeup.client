@@ -1,13 +1,8 @@
-import axios from "axios";
 import { createSlice } from "@reduxjs/toolkit";
+import { SubscriptionResponse } from "../../models/subscription";
 
-type subscription = {
-  Ticker: string;
-  Threshold: number;
-  Position: 0 | 1;
-};
 const initialState = {
-  subscriptions: [] as subscription[],
+  subscriptions: [] as SubscriptionResponse[],
 };
 
 export const subscriptionSlice = createSlice({
@@ -15,3 +10,5 @@ export const subscriptionSlice = createSlice({
   initialState,
   reducers: {},
 });
+
+export const subscriptionReducer = subscriptionSlice.reducer;

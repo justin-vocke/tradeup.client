@@ -1,23 +1,23 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-const algebra1Api = createApi({
-  reducerPath: "algebra1Api",
+const subscriptionApi = createApi({
+  reducerPath: "subscriptionApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://localhost:7100/api/",
+    baseUrl: "https://localhost:5001/api/",
     prepareHeaders: (headers, api) => {
       const token = localStorage.getItem("token");
       token && headers.append("Authorization", "Bearer " + token);
     },
   }),
   endpoints: (builder) => ({
-    getAlgebra1Data: builder.query({
+    getSubscriptionData: builder.query({
       query: () => ({
-        url: "algebra1",
+        url: "subscription",
       }),
     }),
     submitAssessment: builder.mutation({
       query: (answerData) => ({
-        url: "algebra1",
+        url: "subscription",
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -28,6 +28,6 @@ const algebra1Api = createApi({
   }),
 });
 
-export const { useGetAlgebra1DataQuery, useSubmitAssessmentMutation } =
-  algebra1Api;
-export default algebra1Api;
+export const { useGetSubscriptionDataQuery, useSubmitAssessmentMutation } =
+  subscriptionApi;
+export default subscriptionApi;

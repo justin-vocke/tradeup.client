@@ -3,22 +3,22 @@ import { thunk } from "redux-thunk";
 import logger from "redux-logger";
 
 import { configureStore } from "@reduxjs/toolkit";
-import { algebra1Reducer } from "./algebra1slice";
+import { subscriptionReducer } from "./subscriptionSlice";
 import { userAuthReducer } from "./userAuthSlice";
 import authApi from "../../Apis/authApi";
-import algebra1Api from "../../Apis/algebra1Api";
+import subscriptionApi from "../../Apis/subscriptionApi";
 
 const store = configureStore({
   reducer: {
-    algebra1Store: algebra1Reducer,
+    subscriptionStore: subscriptionReducer,
     userAuthStore: userAuthReducer,
     [authApi.reducerPath]: authApi.reducer,
-    [algebra1Api.reducerPath]: algebra1Api.reducer,
+    [subscriptionApi.reducerPath]: subscriptionApi.reducer,
   },
   middleware: (getDefaultMiddleWare) =>
     getDefaultMiddleWare()
       .concat(authApi.middleware)
-      .concat(algebra1Api.middleware),
+      .concat(subscriptionApi.middleware),
 });
 
 export default store;
