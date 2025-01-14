@@ -1,6 +1,6 @@
 export interface SubscriptionResponse {
   threshold: number; // Maps from decimal
-  tickerSymbol: string;
+  ticker: string;
   userId: string; // Maps from Guid
   id: string; // Maps from Guid
   email: string;

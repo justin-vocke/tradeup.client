@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 const subscriptionApi = createApi({
   reducerPath: "subscriptionApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://localhost:5001/api/",
+    baseUrl: "https://localhost:5001/api/v1/subscriptions/",
     prepareHeaders: (headers, api) => {
       const token = localStorage.getItem("token");
       token && headers.append("Authorization", "Bearer " + token);
@@ -12,12 +12,12 @@ const subscriptionApi = createApi({
   endpoints: (builder) => ({
     getSubscriptionData: builder.query({
       query: () => ({
-        url: "subscription",
+        url: "getsubscriptions",
       }),
     }),
     submitAssessment: builder.mutation({
       query: (answerData) => ({
-        url: "subscription",
+        url: "subscriptions",
         method: "POST",
         headers: {
           "Content-Type": "application/json",

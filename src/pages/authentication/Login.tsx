@@ -12,13 +12,15 @@ const Login = () => {
   const navigate = useNavigate();
   const [error, setError] = useState("");
   const [loginUser] = useLoginUserMutation();
+
   const [userInput, setUserInput] = useState({
     email: "",
     password: "",
   });
 
   interface CustomJwtPayload extends JwtPayload {
-    name: string;
+    given_name: string;
+    family_name: string;
     email: string;
   }
 
@@ -47,8 +49,10 @@ const Login = () => {
       console.log(token);
       //TODO: How to deal with null role. Role should be set to 'Authorized' from the server
       //on successful registration so why is token not including role? Or is that even the problem?
-      const { name, email } = jwtDecode<CustomJwtPayload>(token);
-      dispatch(setLoggedInUser({ name, email }));
+      const { given_name, family_name, email } =
+        jwtDecode<CustomJwtPayload>(token);
+      console.log(given_name + " " + family_name + " " + email);
+      dispatch(setLoggedInUser({ given_name, family_name, email }));
       localStorage.setItem("token", token);
 
       navigate("/");

@@ -1,14 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { SubscriptionResponse } from "../../models/subscription";
 
 const initialState = {
-  subscriptions: [] as SubscriptionResponse[],
+  subscriptions: [],
 };
 
 export const subscriptionSlice = createSlice({
   name: "subscription",
   initialState,
-  reducers: {},
+  reducers: {
+    setSubscriptions: (state, action) => {
+      state.subscriptions = action.payload;
+    },
+  },
 });
-
+export const { setSubscriptions } = subscriptionSlice.actions;
 export const subscriptionReducer = subscriptionSlice.reducer;
