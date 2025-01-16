@@ -10,9 +10,9 @@ const subscriptionApi = createApi({
     },
   }),
   endpoints: (builder) => ({
-    getSubscriptionData: builder.query({
+    getUserSubscriptionData: builder.query({
       query: () => ({
-        url: "getsubscriptions",
+        url: "GetSubscriptionsForUser",
       }),
     }),
     submitAssessment: builder.mutation({
@@ -28,6 +28,6 @@ const subscriptionApi = createApi({
   }),
 });
 
-export const { useGetSubscriptionDataQuery, useSubmitAssessmentMutation } =
+export const { useGetUserSubscriptionDataQuery, useSubmitAssessmentMutation } =
   subscriptionApi;
 export default subscriptionApi;

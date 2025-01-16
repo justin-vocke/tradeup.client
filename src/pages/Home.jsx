@@ -1,19 +1,19 @@
 import { useDispatch, useSelector } from "react-redux";
 import StockList from "../features/stocks/StockList";
 import { useEffect } from "react";
-import { useGetSubscriptionDataQuery } from "../Apis/subscriptionApi";
+import { useGetUserSubscriptionDataQuery } from "../Apis/subscriptionApi";
 import { setSubscriptions } from "../Storage/Redux/subscriptionSlice";
 import SubscriptionList from "../features/subscriptions/SubscriptionList";
+import StockSearchBarWrapper from "../features/stocks/StockSearchBarWrapper";
 
 const Home = () => {
   const subscriptionData = useSelector((state) => state.subscriptionStore);
   var subStoreKeys = Object.keys(subscriptionData);
-  console.log("sub store: " + subscriptionData.subscriptions);
   const userData = useSelector((state) => state.userAuthStore);
   const dispatch = useDispatch();
   var isLoggedIn = userData.email.length > 0 ? true : false;
   console.log("logged in: " + isLoggedIn);
-  const { data, error, isLoading } = useGetSubscriptionDataQuery(null, {
+  const { data, error, isLoading } = useGetUserSubscriptionDataQuery(null, {
     skip: !isLoggedIn,
   });
 
@@ -28,7 +28,9 @@ const Home = () => {
   return (
     <div>
       <div className="row">
-        <div className="col-md-6">search bar for stock prices</div>
+        <div className="col-md-6">
+          <StockSearchBarWrapper />{" "}
+        </div>
         <div className="col-md-6">
           graphical display of current top 5 stock prices
         </div>
