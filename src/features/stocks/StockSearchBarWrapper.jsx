@@ -8,7 +8,7 @@ const StockSearchBarWrapper = () => {
   const dispatch = useDispatch();
   const stocks = useSelector((state) => state.stockStore.stockList);
   const handleStockData = (data) => {
-    console.log(data);
+    console.log("handle stock data called");
     dispatch(addStock(data));
   };
   return (

@@ -9,9 +9,8 @@ const StockList: React.FC<StockListProps> = ({ stocks }) => {
   return (
     <div>
       <h2>Stock Prices</h2>
-      {stocks.map((stock) => (
-        <StockItem key={stock.ticker} stock={stock} />
-      ))}
+
+      <StockItem stocks={stocks} />
     </div>
   );
 };
