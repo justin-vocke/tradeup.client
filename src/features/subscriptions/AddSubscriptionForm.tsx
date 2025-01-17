@@ -57,7 +57,7 @@ const AddSubscriptionForm: React.FC<AddSubscriptionFormProps> = ({ stock }) => {
 
     if (response.data) {
       console.log(Object.keys(response.data));
-      dispatch(addSubscription(response.data));
+      dispatch(addSubscription(response.data.value));
       navigate("/");
     }
     handleClosePopup();
