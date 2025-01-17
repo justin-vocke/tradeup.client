@@ -1,4 +1,5 @@
 export interface Stock {
+  ticker: string;
   current: number;
   high: number;
   percentChange: number;

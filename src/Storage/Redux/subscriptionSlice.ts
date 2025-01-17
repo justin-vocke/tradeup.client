@@ -11,7 +11,10 @@ export const subscriptionSlice = createSlice({
     setSubscriptions: (state, action) => {
       state.subscriptions = action.payload;
     },
+    addSubscription: (state, action) => {
+      state.subscriptions.push(action.payload);
+    },
   },
 });
-export const { setSubscriptions } = subscriptionSlice.actions;
+export const { setSubscriptions, addSubscription } = subscriptionSlice.actions;
 export const subscriptionReducer = subscriptionSlice.reducer;

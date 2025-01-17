@@ -7,3 +7,10 @@ export interface SubscriptionResponse {
   position: number; // Maps from the enum
   userNotified: boolean;
 }
+
+export interface SubscriptionRequest {
+  email: string;
+  ticker: string;
+  threshold: number;
+  position: number;
+}

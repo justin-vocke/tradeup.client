@@ -2,6 +2,7 @@ import React from "react";
 import SubscriptionItem from "./SubscriptionItem";
 
 const SubscriptionList = ({ subscriptions }) => {
+  const onTickerClick = (tickerSymbol) => {};
   return (
     <div>
       <h2>Subscriptions</h2>

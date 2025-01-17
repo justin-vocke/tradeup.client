@@ -28,16 +28,18 @@ const Home = () => {
   return (
     <div>
       <div className="row">
-        <div className="col-md-6">
+        <div className="col-md-12">
           <StockSearchBarWrapper />{" "}
         </div>
-        <div className="col-md-6">
+      </div>
+      <div className="row">
+        <div className="col-md-12">
           graphical display of current top 5 stock prices
         </div>
       </div>
       {isLoading && <p>Loading...</p>}
       {error && <p>Error occurred.</p>}
-      {data && (
+      {data && subscriptionData.subscriptions.length > 0 && (
         <>
           {subscriptionData.subscriptions !== undefined && (
             <div className="row">

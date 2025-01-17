@@ -15,19 +15,19 @@ const subscriptionApi = createApi({
         url: "GetSubscriptionsForUser",
       }),
     }),
-    submitAssessment: builder.mutation({
-      query: (answerData) => ({
-        url: "subscriptions",
+    addSubscription: builder.mutation({
+      query: (subscription) => ({
+        url: "",
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(answerData.answers),
+        body: JSON.stringify(subscription),
       }),
     }),
   }),
 });
 
-export const { useGetUserSubscriptionDataQuery, useSubmitAssessmentMutation } =
+export const { useGetUserSubscriptionDataQuery, useAddSubscriptionMutation } =
   subscriptionApi;
 export default subscriptionApi;
