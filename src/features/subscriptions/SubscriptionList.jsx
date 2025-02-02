@@ -1,6 +1,7 @@
 import React from "react";
 import SubscriptionItem from "./SubscriptionItem";
-
+import EditSubscriptionForm from "./EditSubscriptionForm";
+import DeleteSubscriptionForm from "./DeleteSubscriptionForm";
 const SubscriptionList = ({ subscriptions }) => {
   const onTickerClick = (tickerSymbol) => {};
   return (
@@ -22,7 +23,10 @@ const SubscriptionList = ({ subscriptions }) => {
               <td>{sub.tickerSymbol}</td>
               <td>{sub.threshold.toFixed(2)}</td>
               <td>{sub.position == 0 ? "Above" : "Below"}</td>
-              <td>Placeholder for Update/cancel </td>
+              <td>
+                <EditSubscriptionForm subscription={sub} />{" "}
+                <DeleteSubscriptionForm subscription={sub} />
+              </td>
             </tr>
           ))}
         </tbody>

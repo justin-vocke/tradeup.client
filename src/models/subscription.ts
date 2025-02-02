@@ -1,6 +1,6 @@
 export interface SubscriptionResponse {
   threshold: number; // Maps from decimal
-  ticker: string;
+  tickerSymbol: string;
   userId: string; // Maps from Guid
   id: string; // Maps from Guid
   email: string;
@@ -9,6 +9,14 @@ export interface SubscriptionResponse {
 }
 
 export interface SubscriptionRequest {
+  email: string;
+  ticker: string;
+  threshold: number;
+  position: number;
+}
+
+export interface EditSubscriptionRequest {
+  Id: string;
   email: string;
   ticker: string;
   threshold: number;

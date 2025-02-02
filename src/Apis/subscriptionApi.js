@@ -25,9 +25,33 @@ const subscriptionApi = createApi({
         body: JSON.stringify(subscription),
       }),
     }),
+    editSubscription: builder.mutation({
+      query: (subscription) => ({
+        url: "",
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(subscription),
+      }),
+    }),
+    deleteSubscription: builder.mutation({
+      query: (id) => ({
+        url: "",
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(id),
+      }),
+    }),
   }),
 });
 
-export const { useGetUserSubscriptionDataQuery, useAddSubscriptionMutation } =
-  subscriptionApi;
+export const {
+  useGetUserSubscriptionDataQuery,
+  useAddSubscriptionMutation,
+  useEditSubscriptionMutation,
+  useDeleteSubscriptionMutation,
+} = subscriptionApi;
 export default subscriptionApi;
