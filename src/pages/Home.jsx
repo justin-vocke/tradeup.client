@@ -5,6 +5,7 @@ import { useGetUserSubscriptionDataQuery } from "../Apis/subscriptionApi";
 import { setSubscriptions } from "../Storage/Redux/subscriptionSlice";
 import SubscriptionList from "../features/subscriptions/SubscriptionList";
 import StockSearchBarWrapper from "../features/stocks/StockSearchBarWrapper";
+import StockTicker from "../features/stocks/StockTicker";
 
 const Home = () => {
   const subscriptionData = useSelector((state) => state.subscriptionStore);
@@ -34,7 +35,7 @@ const Home = () => {
       </div>
       <div className="row">
         <div className="col-md-12">
-          graphical display of current top 5 stock prices
+          <StockTicker />
         </div>
       </div>
       {isLoading && <p>Loading...</p>}
