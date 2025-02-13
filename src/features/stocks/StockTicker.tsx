@@ -1,43 +1,38 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import useSignalR from "../../hooks/useSignalr";
 
-const HUB_URL = "https://localhost:5001/stockHub"; // Need to extract this to remove magic string
+const HUB_URL = "http://localhost:5000/stockHub";
 
-const StockTicker: React.FC = () => {
-  const [tickerSymbol, setTickerSymbol] = useState<string>("");
-  const stockData = useSignalR(HUB_URL, tickerSymbol);
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTickerSymbol(e.target.value.toUpperCase()); // Ticker symbols are usually uppercase
-  };
+const StockSubscription = () => {
+  const { subscribeToStock, stockData } = useSignalR(HUB_URL);
+  const [ticker, setTicker] = useState("");
 
   const handleSubscribe = () => {
-    if (tickerSymbol.trim()) {
-      setTickerSymbol("");
+    if (ticker.trim()) {
+      subscribeToStock(ticker);
+      setTicker(""); // Clear input
     }
   };
+
   return (
-    <div className="p-4 bg-gray-900 text-white rounded-lg">
-      <h2 className="text-lg font-bold mb-3">Live Stock Updates</h2>
+    <div>
       <input
         type="text"
-        placeholder="Enter Stock Symbol"
-        value={tickerSymbol}
-        onChange={handleChange}
-        className="mb-3 p-2 text-black rounded"
+        value={ticker}
+        onChange={(e) => setTicker(e.target.value)}
+        placeholder="Enter stock ticker"
       />
       <button onClick={handleSubscribe}>Subscribe</button>
-      {stockData ? (
-        <div className="mb-2 p-2 bg-gray-800 rounded">
-          <strong>{stockData.symbol}</strong> - $
-          {stockData.lastPrice.toFixed(2)}
-          <span className="ml-2 text-sm text-gray-400">({stockData.time})</span>
+
+      {stockData && (
+        <div>
+          <h3>Stock Data:</h3>
+          <p>Ticker: {stockData.ticker}</p>
+          <p>Price: {stockData.price}</p>
         </div>
-      ) : (
-        <div className="text-gray-400">Enter a symbol to get live updates.</div>
       )}
     </div>
   );
 };
 
-export default StockTicker;
+export default StockSubscription;

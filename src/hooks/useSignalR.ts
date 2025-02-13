@@ -1,57 +1,48 @@
 import { useEffect, useState } from "react";
 import * as signalR from "@microsoft/signalr";
 
-interface StockUpdate {
-  symbol: string;
-  lastPrice: number;
-  volume: number;
-  conditions: string[];
-  time: string;
-}
-
-const useSignalR = (hubUrl: string, tickerSymbol: string) => {
-  const [stockData, setStockData] = useState<StockUpdate | null>(null);
+const useSignalR = (hubUrl: string) => {
+  const [connection, setConnection] = useState<signalR.HubConnection | null>(
+    null
+  );
+  const [stockData, setStockData] = useState<any>(null); // Store stock updates
 
   useEffect(() => {
-    const connection = new signalR.HubConnectionBuilder()
+    const newConnection = new signalR.HubConnectionBuilder()
       .withUrl(hubUrl)
       .withAutomaticReconnect()
       .build();
 
-    connection
+    setConnection(newConnection);
+
+    newConnection
       .start()
       .then(() => {
-        connection.invoke("SubscribeToStock", tickerSymbol);
-        console.log(`Connected to SignalR for ${tickerSymbol}`);
+        console.log("SignalR Connected");
+
+        // ✅ Listen for stock price updates
+        newConnection.on("ReceiveStockUpdate", (update) => {
+          console.log("Stock Update:", update);
+          setStockData(update); // Store stock price updates
+        });
       })
       .catch((err) => console.error("SignalR Connection Error:", err));
 
-    connection.on("ReceiveStockUpdate", (data) => {
-      console.log("Stock update received:", data);
-      if (Array.isArray(data)) {
-        // Find the update for the specific ticker symbol
-        const stock = data.find((stock: any) => stock.s === tickerSymbol);
-
-        if (stock) {
-          const update: StockUpdate = {
-            symbol: stock.s,
-            lastPrice: stock.p,
-            volume: stock.v,
-            conditions: stock.c || [],
-            time: new Date(stock.t).toLocaleTimeString(),
-          };
-
-          setStockData(update);
-        }
-      }
-    });
-
     return () => {
-      connection.stop();
+      newConnection.stop();
     };
-  }, [hubUrl, tickerSymbol]);
+  }, [hubUrl]);
 
-  return stockData;
+  // Function to subscribe to a new stock ticker
+  const subscribeToStock = (ticker: string) => {
+    if (connection) {
+      connection
+        .invoke("SubscribeToStock", ticker)
+        .catch((err) => console.error(err));
+    }
+  };
+
+  return { stockData, subscribeToStock };
 };
 
 export default useSignalR;
