@@ -1,11 +1,15 @@
 import { useEffect, useState } from "react";
 import * as signalR from "@microsoft/signalr";
+import {
+  mapWebSocketDataToStockData,
+  StockDataWebSocket,
+} from "../models/stock";
 
 const useSignalR = (hubUrl: string) => {
   const [connection, setConnection] = useState<signalR.HubConnection | null>(
     null
   );
-  const [stockData, setStockData] = useState<any>(null); // Store stock updates
+  const [stockData, setStockData] = useState<StockDataWebSocket | null>(null); // Store stock updates
 
   useEffect(() => {
     const newConnection = new signalR.HubConnectionBuilder()
@@ -23,7 +27,8 @@ const useSignalR = (hubUrl: string) => {
         // ✅ Listen for stock price updates
         newConnection.on("ReceiveStockUpdate", (update) => {
           console.log("Stock Update:", update);
-          setStockData(update); // Store stock price updates
+          const formattedStockData = mapWebSocketDataToStockData(update);
+          setStockData(formattedStockData); // Store stock price updates
         });
       })
       .catch((err) => console.error("SignalR Connection Error:", err));

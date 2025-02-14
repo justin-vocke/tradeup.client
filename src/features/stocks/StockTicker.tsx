@@ -1,12 +1,11 @@
 import { useState } from "react";
-import useSignalR from "../../hooks/useSignalr";
+import useSignalR from "../../hooks/useSignalR";
 
 const HUB_URL = "http://localhost:5000/stockHub";
 
 const StockSubscription = () => {
   const { subscribeToStock, stockData } = useSignalR(HUB_URL);
   const [ticker, setTicker] = useState("");
-
   const handleSubscribe = () => {
     if (ticker.trim()) {
       subscribeToStock(ticker);
@@ -27,8 +26,9 @@ const StockSubscription = () => {
       {stockData && (
         <div>
           <h3>Stock Data:</h3>
-          <p>Ticker: {stockData.ticker}</p>
-          <p>Price: {stockData.price}</p>
+          <p>Ticker: {stockData.symbol}</p>
+          <p>Price: {stockData.lastPrice}</p>
+          <p>Volume: {stockData.volume}</p>
         </div>
       )}
     </div>
